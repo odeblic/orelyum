@@ -7,15 +7,12 @@ public class Formatter(int width = 8, int precision = 2)
     {
         int width = this.width > 2 ? this.width : 2;
 
-        switch (direction)
+        return direction switch
         {
-            case Trade.Direction.BUY:
-                return "buy".PadRight(width - 2);
-            case Trade.Direction.SELL:
-                return "sell".PadRight(width - 2);
-            default:
-                throw new ArgumentException("Invalid trade direction");
-        }
+            Trade.Direction.BUY => "buy".PadRight(width - 2),
+            Trade.Direction.SELL => "sell".PadRight(width - 2),
+            _ => throw new ArgumentException("Invalid trade direction"),
+        };
     }
 
     public string Symbol(string symbol)
