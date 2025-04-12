@@ -133,22 +133,32 @@
         static void DisplayHelp()
         {
             Console.WriteLine("Description:");
-            Console.WriteLine("    This program loads a batch of booked trades and calculate the positions.");
+            Console.WriteLine("    This program loads a batch of booked trades (and current market prices)");
+            Console.WriteLine("    and calculate the resulting positions (and mark to market).");
             Console.WriteLine("");
             Console.WriteLine("Usage:");
-            Console.WriteLine("    $ orelyum [TRADE_FILE]");
-            Console.WriteLine("    $ orelyum [TRADE_FILE] [PRICE_FILE]");
+            Console.Write("    $ ");
+            Console.ForegroundColor = ConsoleColor.DarkCyan;
+            Console.Write("orelyum [TRADE_FILE]\n");
+            Console.ResetColor();
+            Console.Write("    $ ");
+            Console.ForegroundColor = ConsoleColor.DarkCyan;
+            Console.Write("orelyum [TRADE_FILE] [PRICE_FILE]\n");
+            Console.ResetColor();
         }
 
         static void DisplayError(AppError e)
         {
             Console.WriteLine("Error:");
+            Console.ForegroundColor = ConsoleColor.Red;
             Console.WriteLine($"    {e.Message}");
 
             if (e.InnerException != null)
             {
                 Console.WriteLine($"    {e.InnerException.Message}");
             }
+
+            Console.ResetColor();
         }
     }
 }
