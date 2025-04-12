@@ -10,10 +10,10 @@ A list of trades previously booked is available.
 
 | direction | symbol | quantity | price |
 | --------- | ------ | -------- | ----- |
-| buy       | etf-99 |     1500 | 12.78 |
-| sell      | etf-99 |     1200 | 13.04 |
-| buy       | stk-71 |      700 | 55.38 |
-| sell      | stk-71 |      300 | 55.32 |
+| buy       | ETF-99 |     1500 | 12.78 |
+| sell      | ETF-99 |     1200 | 13.04 |
+| buy       | STK-71 |      700 | 55.38 |
+| sell      | STK-71 |      300 | 55.32 |
 
 Calculate the position for each asset.
 
@@ -24,7 +24,7 @@ How to clone and build:
 ```sh
 git clone https://github.com/odeblic/orelyum.git
 cd orelyum
-dotnet run build
+dotnet build
 ```
 
 How to test and run:
