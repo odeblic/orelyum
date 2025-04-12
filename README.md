@@ -2,7 +2,7 @@
 
 Because naming matters, because it is cool, because we have fun coding.
 
-![Orelyum](images/image.jpeg)
+![Orelyum](images/illustration.jpeg)
 
 ## Requirements
 
