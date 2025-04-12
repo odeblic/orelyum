@@ -39,8 +39,14 @@ dotnet build
 How to test and run:
 
 ```sh
-dotnet run samples/list-of-trades.txt
-dotnet run samples/list-of-trades.txt samples/market-prices.txt
+# display usage
+dotnet run --project src/Orelyum
+
+# calculate positions
+dotnet run --project src/Orelyum samples/list-of-trades.txt
+
+# calculate positions and market to market
+dotnet run --project src/Orelyum samples/list-of-trades.txt samples/market-prices.txt
 ```
 
 ## Screenshots
