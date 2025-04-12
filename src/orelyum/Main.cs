@@ -14,13 +14,15 @@
 
     static void ProcessTrades(string filePath)
     {
-        var tradeList = Booking.LoadTrades(filePath);
+        var booking = new Booking();
         var terminal = new Terminal(true);
+
+        booking.LoadTrades(filePath);
 
         terminal.Title("trades");
         terminal.NewLine();
 
-        foreach (var trade in tradeList)
+        foreach (var trade in booking.tradeList)
         {
             terminal.Direction(trade.Dir);
             terminal.Symbol(trade.Symbol);
@@ -29,7 +31,7 @@
             terminal.NewLine();
         }
 
-        Dictionary<string, int> positions = Booking.ComputePositions(tradeList);
+        Dictionary<string, int> positions = booking.ComputePositions();
 
         terminal.NewLine();
         terminal.Title("positions");

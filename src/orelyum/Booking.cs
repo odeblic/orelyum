@@ -2,10 +2,17 @@ using System.Text.RegularExpressions;
 
 public class Booking
 {
-    static public List<Trade> LoadTrades(string filePath)
-    {
-        var tradeList = new List<Trade>();
+    public readonly List<Trade> tradeList;
+    public readonly Dictionary<string, decimal> marketPrices;
 
+    public Booking()
+    {
+        tradeList = [];
+        marketPrices = [];
+    }
+
+    public void LoadTrades(string filePath)
+    {
         if (!File.Exists(filePath))
         {
             throw new ArgumentException("File not found");
@@ -16,14 +23,10 @@ public class Booking
             Trade trade = new Trade(line);
             tradeList.Add(trade);
         }
-
-        return tradeList;
     }
 
-    static public Dictionary<string, decimal> LoadPrices(string filePath)
+    public void LoadPrices(string filePath)
     {
-        var prices = new Dictionary<string, decimal>();
-
         if (!File.Exists(filePath))
         {
             throw new ArgumentException("File not found");
@@ -37,18 +40,16 @@ public class Booking
             {
                 string symbol = fields[0];
                 decimal price = decimal.Parse(fields[1]);
-                prices.Add(symbol, price);
+                marketPrices.Add(symbol, price);
             }
             else
             {
                 throw new ArgumentException("Invalid price field count");
             }
         }
-
-        return prices;
     }
 
-    static public Dictionary<string, int> ComputePositions(List<Trade> tradeList)
+    public Dictionary<string, int> ComputePositions()
     {
         var positions = new Dictionary<string, int>();
 
@@ -79,7 +80,7 @@ public class Booking
         return positions;
     }
 
-    static public Dictionary<string, decimal> ComputePnL(List<Trade> tradeList, Dictionary<string, int> prices)
+    public Dictionary<string, decimal> ComputePnL()
     {
         var pnl = new Dictionary<string, decimal>();
 
