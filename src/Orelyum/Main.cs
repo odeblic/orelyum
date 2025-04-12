@@ -4,33 +4,40 @@
     {
         static void Main(string[] args)
         {
-            string filePathTrades;
-            string filePathPrices;
-            var booking = new Booking();
-
-            if (args.Length == 1)
+            try
             {
-                filePathTrades = args[0];
-                booking.LoadTrades(filePathTrades);
+                string filePathTrades;
+                string filePathPrices;
+                var booking = new Booking();
 
-                ShowTrades(booking);
-                ShowPositions(booking);
+                if (args.Length == 1)
+                {
+                    filePathTrades = args[0];
+                    booking.LoadTrades(filePathTrades);
+
+                    ShowTrades(booking);
+                    ShowPositions(booking);
+                }
+                else if (args.Length == 2)
+                {
+                    filePathTrades = args[0];
+                    filePathPrices = args[1];
+                    booking.LoadTrades(filePathTrades);
+                    booking.LoadPrices(filePathPrices);
+
+                    ShowTrades(booking);
+                    ShowPrices(booking);
+                    ShowPositions(booking);
+                    ShowMarkToMarket(booking);
+                }
+                else
+                {
+                    DisplayHelp();
+                }
             }
-            else if (args.Length == 2)
+            catch (AppError e)
             {
-                filePathTrades = args[0];
-                filePathPrices = args[1];
-                booking.LoadTrades(filePathTrades);
-                booking.LoadPrices(filePathPrices);
-
-                ShowTrades(booking);
-                ShowPrices(booking);
-                ShowPositions(booking);
-                ShowMarkToMarket(booking);
-            }
-            else
-            {
-                DisplayHelp();
+                DisplayError(e);
             }
         }
 
@@ -128,6 +135,17 @@
             Console.WriteLine("Usage:");
             Console.WriteLine("    $ orelyum [TRADE_FILE]");
             Console.WriteLine("    $ orelyum [TRADE_FILE] [PRICE_FILE]");
+        }
+
+        static void DisplayError(AppError e)
+        {
+            Console.WriteLine("Error:");
+            Console.WriteLine($"    {e.Message}");
+
+            if (e.InnerException != null)
+            {
+                Console.WriteLine($"    {e.InnerException.Message}");
+            }
         }
     }
 }
