@@ -2,7 +2,7 @@
 
 Because naming matters, because it is cool, because we have fun coding.
 
-![Orelyum](images/illustration.jpeg)
+![Orelyum](docs/images/illustration.jpeg)
 
 ## Requirements
 
@@ -56,11 +56,11 @@ dotnet run --project src/Orelyum samples/list-of-trades.txt samples/market-price
 
 Positions only:
 
-![Positions only](images/screenshot1.png)
+![Positions only](docs/images/screenshot1.png)
 
 Positions and mark to market:
 
-![Positions and market to market](images/screenshot2.png)
+![Positions and market to market](docs/images/screenshot2.png)
 
 ## License
 
