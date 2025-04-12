@@ -1,101 +1,104 @@
 using System.Text.RegularExpressions;
 
-public class Booking
+namespace Orelyum
 {
-    public readonly List<Trade> tradeList;
-    public readonly Dictionary<string, decimal> marketPrices;
-
-    public Booking()
+    public class Booking
     {
-        tradeList = [];
-        marketPrices = [];
-    }
+        public readonly List<Trade> tradeList;
+        public readonly Dictionary<string, decimal> marketPrices;
 
-    public void LoadTrades(string filePath)
-    {
-        if (!File.Exists(filePath))
+        public Booking()
         {
-            throw new ArgumentException("File not found");
+            tradeList = [];
+            marketPrices = [];
         }
 
-        foreach (string line in File.ReadLines(filePath))
+        public void LoadTrades(string filePath)
         {
-            Trade trade = new Trade(line);
-            tradeList.Add(trade);
-        }
-    }
-
-    public void LoadPrices(string filePath)
-    {
-        if (!File.Exists(filePath))
-        {
-            throw new ArgumentException("File not found");
-        }
-
-        foreach (string line in File.ReadLines(filePath))
-        {
-            string[] fields = Regex.Split(line, @"\s+");
-
-            if (fields.Length == 2)
+            if (!File.Exists(filePath))
             {
-                string symbol = fields[0];
-                decimal price = decimal.Parse(fields[1]);
-                marketPrices.Add(symbol, price);
-            }
-            else
-            {
-                throw new ArgumentException("Invalid price field count");
-            }
-        }
-    }
-
-    public Dictionary<string, int> CalculatePositions()
-    {
-        var positions = new Dictionary<string, int>();
-
-        foreach (var trade in tradeList)
-        {
-            int tradedQuantity = trade.Quantity;
-
-            if (trade.Dir == Trade.Direction.SELL)
-            {
-                tradedQuantity = -tradedQuantity;
+                throw new ArgumentException("File not found");
             }
 
-            if (positions.TryGetValue(trade.Symbol, out int cumulatedQuantity))
+            foreach (string line in File.ReadLines(filePath))
             {
-                positions[trade.Symbol] = cumulatedQuantity + tradedQuantity;
-            }
-            else
-            {
-                positions.Add(trade.Symbol, tradedQuantity);
+                Trade trade = new Trade(line);
+                tradeList.Add(trade);
             }
         }
 
-        return positions;
-    }
-
-    public Dictionary<string, decimal> CalculateMarkToMarket()
-    {
-        var positions = CalculatePositions();
-        var m2m = new Dictionary<string, decimal>();
-
-        foreach (var position in positions)
+        public void LoadPrices(string filePath)
         {
-            string symbol = position.Key;
-            int quantity = position.Value;
-
-            if (quantity != 0)
+            if (!File.Exists(filePath))
             {
-                if (!marketPrices.TryGetValue(symbol, out decimal price))
+                throw new ArgumentException("File not found");
+            }
+
+            foreach (string line in File.ReadLines(filePath))
+            {
+                string[] fields = Regex.Split(line, @"\s+");
+
+                if (fields.Length == 2)
                 {
-                    throw new ArgumentException("Price not found for given symbol");
+                    string symbol = fields[0];
+                    decimal price = decimal.Parse(fields[1]);
+                    marketPrices.Add(symbol, price);
+                }
+                else
+                {
+                    throw new ArgumentException("Invalid price field count");
+                }
+            }
+        }
+
+        public Dictionary<string, int> CalculatePositions()
+        {
+            var positions = new Dictionary<string, int>();
+
+            foreach (var trade in tradeList)
+            {
+                int tradedQuantity = trade.Quantity;
+
+                if (trade.Dir == Trade.Direction.SELL)
+                {
+                    tradedQuantity = -tradedQuantity;
                 }
 
-                m2m.Add(symbol, price * quantity);
+                if (positions.TryGetValue(trade.Symbol, out int cumulatedQuantity))
+                {
+                    positions[trade.Symbol] = cumulatedQuantity + tradedQuantity;
+                }
+                else
+                {
+                    positions.Add(trade.Symbol, tradedQuantity);
+                }
             }
+
+            return positions;
         }
 
-        return m2m;
+        public Dictionary<string, decimal> CalculateMarkToMarket()
+        {
+            var positions = CalculatePositions();
+            var m2m = new Dictionary<string, decimal>();
+
+            foreach (var position in positions)
+            {
+                string symbol = position.Key;
+                int quantity = position.Value;
+
+                if (quantity != 0)
+                {
+                    if (!marketPrices.TryGetValue(symbol, out decimal price))
+                    {
+                        throw new ArgumentException("Price not found for given symbol");
+                    }
+
+                    m2m.Add(symbol, price * quantity);
+                }
+            }
+
+            return m2m;
+        }
     }
 }

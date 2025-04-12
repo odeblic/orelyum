@@ -1,8 +1,12 @@
-Microsoft Visual Studio Solution File, Format Version 12.00
+﻿Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.5.2.0
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "orelyum", "src/Orelyum/Orelyum.csproj", "{D54A91CB-B6BB-6E93-54B1-05DC373725CD}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "orelyum", "src\Orelyum\Orelyum.csproj", "{D54A91CB-B6BB-6E93-54B1-05DC373725CD}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "test", "test", "{80D1650C-37E2-48F4-8EA1-21187F875436}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Orelyum.Tests", "test\Orelyum.Tests\Orelyum.Tests.csproj", "{72469EE2-22C6-4359-9618-A35461E51EF8}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -14,11 +18,18 @@ Global
 		{D54A91CB-B6BB-6E93-54B1-05DC373725CD}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D54A91CB-B6BB-6E93-54B1-05DC373725CD}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D54A91CB-B6BB-6E93-54B1-05DC373725CD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{72469EE2-22C6-4359-9618-A35461E51EF8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{72469EE2-22C6-4359-9618-A35461E51EF8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{72469EE2-22C6-4359-9618-A35461E51EF8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{72469EE2-22C6-4359-9618-A35461E51EF8}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {C91AE7F6-1A74-4CCB-934F-A2803B8DAD18}
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{72469EE2-22C6-4359-9618-A35461E51EF8} = {80D1650C-37E2-48F4-8EA1-21187F875436}
 	EndGlobalSection
 EndGlobal

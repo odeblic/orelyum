@@ -1,55 +1,58 @@
 using System.Text.RegularExpressions;
 
-public class Trade
+namespace Orelyum
 {
-    public enum Direction
+    public class Trade
     {
-        BUY,
-        SELL,
-    }
-
-    public Direction Dir { get; set; }
-    public string Symbol { get; set; }
-    public int Quantity { get; set; }
-    public decimal Price { get; set; }
-
-    public Trade(string line)
-    {
-        string[] fields = Regex.Split(line, @"\s+");
-
-        if (fields.Length == 4)
+        public enum Direction
         {
-            Dir = parseDirection(fields[0]);
-            Symbol = fields[1];
-            Quantity = int.Parse(fields[2]);
-            Price = decimal.Parse(fields[3]);
+            BUY,
+            SELL,
         }
-        else
-        {
-            throw new ArgumentException("Invalid trade field count");
-        }
-    }
 
-    public override string ToString()
-    {
-        return $"{Dir} {Symbol} {Quantity} {Price}";
-    }
+        public Direction Dir { get; set; }
+        public string Symbol { get; set; }
+        public int Quantity { get; set; }
+        public decimal Price { get; set; }
 
-    private static Direction parseDirection(string direction)
-    {
-        direction = direction.ToLower();
+        public Trade(string line)
+        {
+            string[] fields = Regex.Split(line, @"\s+");
 
-        if (direction == "buy")
-        {
-            return Direction.BUY;
+            if (fields.Length == 4)
+            {
+                Dir = parseDirection(fields[0]);
+                Symbol = fields[1];
+                Quantity = int.Parse(fields[2]);
+                Price = decimal.Parse(fields[3]);
+            }
+            else
+            {
+                throw new ArgumentException("Invalid trade field count");
+            }
         }
-        else if (direction == "sell")
+
+        public override string ToString()
         {
-            return Direction.SELL;
+            return $"{Dir} {Symbol} {Quantity} {Price}";
         }
-        else
+
+        private static Direction parseDirection(string direction)
         {
-            throw new ArgumentException("Invalid trade direction");
+            direction = direction.ToLower();
+
+            if (direction == "buy")
+            {
+                return Direction.BUY;
+            }
+            else if (direction == "sell")
+            {
+                return Direction.SELL;
+            }
+            else
+            {
+                throw new ArgumentException("Invalid trade direction");
+            }
         }
     }
 }

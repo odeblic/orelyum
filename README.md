@@ -39,6 +39,9 @@ dotnet build
 How to test and run:
 
 ```sh
+# run unit tests
+dotnet test
+
 # display usage
 dotnet run --project src/Orelyum
 
