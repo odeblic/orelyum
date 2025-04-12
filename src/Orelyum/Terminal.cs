@@ -2,7 +2,7 @@ namespace Orelyum
 {
     public class Terminal(bool color = false)
     {
-        readonly Formatter formatter = new Formatter();
+        readonly Formatter formatter = new();
         readonly bool color = color;
 
         public void Title(string title)

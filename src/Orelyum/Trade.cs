@@ -2,8 +2,11 @@ using System.Text.RegularExpressions;
 
 namespace Orelyum
 {
-    public class Trade
+    public partial class Trade
     {
+        [GeneratedRegex(@"\s+")]
+        private static partial Regex SpacePattern();
+
         public enum Direction
         {
             BUY,
@@ -17,11 +20,11 @@ namespace Orelyum
 
         public Trade(string line)
         {
-            string[] fields = Regex.Split(line, @"\s+");
+            string[] fields = SpacePattern().Split(line);
 
             if (fields.Length == 4)
             {
-                Dir = parseDirection(fields[0]);
+                Dir = ParseDirection(fields[0]);
                 Symbol = fields[1];
                 Quantity = int.Parse(fields[2]);
                 Price = decimal.Parse(fields[3]);
@@ -37,7 +40,7 @@ namespace Orelyum
             return $"{Dir} {Symbol} {Quantity} {Price}";
         }
 
-        private static Direction parseDirection(string direction)
+        private static Direction ParseDirection(string direction)
         {
             direction = direction.ToLower();
 
