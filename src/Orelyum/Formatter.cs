@@ -13,7 +13,7 @@ namespace Orelyum
             {
                 Trade.Direction.BUY => "buy".PadRight(width - 2),
                 Trade.Direction.SELL => "sell".PadRight(width - 2),
-                _ => throw new ArgumentException("Invalid trade direction"),
+                _ => throw new AppError("Invalid trade direction"),
             };
         }
 

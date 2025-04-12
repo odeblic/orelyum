@@ -17,7 +17,7 @@ namespace Orelyum
         {
             if (!File.Exists(filePath))
             {
-                throw new ArgumentException("File not found");
+                throw new AppError("File not found");
             }
 
             foreach (string line in File.ReadLines(filePath))
@@ -31,7 +31,7 @@ namespace Orelyum
         {
             if (!File.Exists(filePath))
             {
-                throw new ArgumentException("File not found");
+                throw new AppError("File not found");
             }
 
             foreach (string line in File.ReadLines(filePath))
@@ -46,7 +46,7 @@ namespace Orelyum
                 }
                 else
                 {
-                    throw new ArgumentException("Invalid price field count");
+                    throw new AppError("Invalid price field count");
                 }
             }
         }
@@ -91,7 +91,7 @@ namespace Orelyum
                 {
                     if (!marketPrices.TryGetValue(symbol, out decimal price))
                     {
-                        throw new ArgumentException("Price not found for given symbol");
+                        throw new AppError("Price not found for given symbol");
                     }
 
                     m2m.Add(symbol, price * quantity);

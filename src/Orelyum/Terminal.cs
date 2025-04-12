@@ -29,7 +29,7 @@ namespace Orelyum
                         Console.ForegroundColor = ConsoleColor.Red;
                         break;
                     default:
-                        throw new ArgumentException("Invalid trade direction");
+                        throw new AppError("Invalid trade direction");
                 }
             }
 

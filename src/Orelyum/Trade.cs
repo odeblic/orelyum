@@ -28,7 +28,7 @@ namespace Orelyum
             }
             else
             {
-                throw new ArgumentException("Invalid trade field count");
+                throw new AppError("Invalid trade field count");
             }
         }
 
@@ -51,7 +51,7 @@ namespace Orelyum
             }
             else
             {
-                throw new ArgumentException("Invalid trade direction");
+                throw new AppError("Invalid trade direction");
             }
         }
     }
