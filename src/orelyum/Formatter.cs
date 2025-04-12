@@ -31,6 +31,6 @@ public class Formatter(int width = 8, int precision = 2)
 
     public string Price(decimal price)
     {
-        return price.ToString($"F{precision}").PadLeft(width);
+        return price.ToString($"F{precision}").PadLeft(width + 2);
     }
 }

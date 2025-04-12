@@ -49,58 +49,53 @@ public class Booking
         }
     }
 
-    public Dictionary<string, int> ComputePositions()
+    public Dictionary<string, int> CalculatePositions()
     {
         var positions = new Dictionary<string, int>();
 
         foreach (var trade in tradeList)
         {
-            int newQuantity = 0;
+            int tradedQuantity = trade.Quantity;
 
-            if (trade.Dir == Trade.Direction.BUY)
+            if (trade.Dir == Trade.Direction.SELL)
             {
-                newQuantity = trade.Quantity;
+                tradedQuantity = -tradedQuantity;
+            }
+
+            if (positions.TryGetValue(trade.Symbol, out int cumulatedQuantity))
+            {
+                positions[trade.Symbol] = cumulatedQuantity + tradedQuantity;
             }
             else
             {
-                newQuantity = -trade.Quantity;
-            }
-
-            if (positions.ContainsKey(trade.Symbol))
-            {
-                int currentQuantity = positions[trade.Symbol];
-                positions[trade.Symbol] = currentQuantity + newQuantity;
-            }
-            else
-            {
-                positions.Add(trade.Symbol, newQuantity);
+                positions.Add(trade.Symbol, tradedQuantity);
             }
         }
 
         return positions;
     }
 
-    public Dictionary<string, decimal> ComputePnL()
+    public Dictionary<string, decimal> CalculateMarkToMarket()
     {
-        var pnl = new Dictionary<string, decimal>();
+        var positions = CalculatePositions();
+        var m2m = new Dictionary<string, decimal>();
 
-        foreach (var trade in tradeList)
+        foreach (var position in positions)
         {
-            if (!pnl.ContainsKey(trade.Symbol))
-            {
-                pnl.Add(trade.Symbol, 0);
-            }
+            string symbol = position.Key;
+            int quantity = position.Value;
 
-            if (trade.Dir == Trade.Direction.BUY)
+            if (quantity != 0)
             {
-                pnl[trade.Symbol] += trade.Quantity * trade.Price;
-            }
-            else
-            {
-                pnl[trade.Symbol] -= trade.Quantity * trade.Price;
+                if (!marketPrices.TryGetValue(symbol, out decimal price))
+                {
+                    throw new ArgumentException("Price not found for given symbol");
+                }
+
+                m2m.Add(symbol, price * quantity);
             }
         }
 
-        return pnl;
+        return m2m;
     }
 }

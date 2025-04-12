@@ -2,9 +2,28 @@
 {
     static void Main(string[] args)
     {
+        string filePathTrades;
+        string filePathPrices;
+
+        var booking = new Booking();
+
         if (args.Length == 1)
         {
-            ProcessTrades(args[0]);
+            filePathTrades = args[0];
+            booking.LoadTrades(filePathTrades);
+            ShowTrades(booking);
+            ShowPositions(booking);
+        }
+        else if (args.Length == 2)
+        {
+            filePathTrades = args[0];
+            filePathPrices = args[1];
+            booking.LoadTrades(filePathTrades);
+            booking.LoadPrices(filePathPrices);
+            ShowTrades(booking);
+            ShowPrices(booking);
+            ShowPositions(booking);
+            ShowMarkToMarket(booking);
         }
         else
         {
@@ -12,12 +31,9 @@
         }
     }
 
-    static void ProcessTrades(string filePath)
+    static void ShowTrades(Booking booking)
     {
-        var booking = new Booking();
         var terminal = new Terminal(true);
-
-        booking.LoadTrades(filePath);
 
         terminal.Title("trades");
         terminal.NewLine();
@@ -31,13 +47,39 @@
             terminal.NewLine();
         }
 
-        Dictionary<string, int> positions = booking.ComputePositions();
+        terminal.NewLine();
+    }
+
+    static void ShowPrices(Booking booking)
+    {
+        var terminal = new Terminal(true);
+
+        terminal.Title("market prices");
+        terminal.NewLine();
+
+        foreach (var kvp in booking.marketPrices)
+        {
+            var symbol = kvp.Key;
+            var price = kvp.Value;
+
+            terminal.Symbol(symbol);
+            terminal.Price(price);
+            terminal.NewLine();
+        }
 
         terminal.NewLine();
+    }
+
+    static void ShowPositions(Booking booking)
+    {
+        var terminal = new Terminal(true);
+
+        Dictionary<string, int> positions = booking.CalculatePositions();
+
         terminal.Title("positions");
         terminal.NewLine();
 
-        foreach (KeyValuePair<string, int> kvp in positions)
+        foreach (var kvp in positions)
         {
             var symbol = kvp.Key;
             var quantity = kvp.Value;
@@ -49,6 +91,30 @@
                 terminal.NewLine();
             }
         }
+
+        terminal.NewLine();
+    }
+
+    static void ShowMarkToMarket(Booking booking)
+    {
+        var terminal = new Terminal(true);
+
+        Dictionary<string, decimal> m2m = booking.CalculateMarkToMarket();
+
+        terminal.Title("mark to market");
+        terminal.NewLine();
+
+        foreach (var kvp in m2m)
+        {
+            var symbol = kvp.Key;
+            var notional = kvp.Value;
+
+            terminal.Symbol(symbol);
+            terminal.Price(notional);
+            terminal.NewLine();
+        }
+
+        terminal.NewLine();
     }
 
     static void DisplayHelp()
