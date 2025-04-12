@@ -2,33 +2,44 @@
 {
     class Program
     {
+        readonly Booking booking;
+        readonly Terminal terminal;
+
+        private Program()
+        {
+            booking = new Booking();
+            terminal = new Terminal(true);
+        }
+
+        public Program(string filePathTrades)
+        : this()
+        {
+            booking.LoadTrades(filePathTrades);
+        }
+
+        public Program(string filePathTrades, string filePathPrices)
+        : this(filePathTrades)
+        {
+            booking.LoadPrices(filePathPrices);
+        }
+
         static void Main(string[] args)
         {
             try
             {
-                string filePathTrades;
-                string filePathPrices;
-                var booking = new Booking();
-
                 if (args.Length == 1)
                 {
-                    filePathTrades = args[0];
-                    booking.LoadTrades(filePathTrades);
-
-                    ShowTrades(booking);
-                    ShowPositions(booking);
+                    Program program = new(args[0]);
+                    program.ShowTrades();
+                    program.ShowPositions();
                 }
                 else if (args.Length == 2)
                 {
-                    filePathTrades = args[0];
-                    filePathPrices = args[1];
-                    booking.LoadTrades(filePathTrades);
-                    booking.LoadPrices(filePathPrices);
-
-                    ShowTrades(booking);
-                    ShowPrices(booking);
-                    ShowPositions(booking);
-                    ShowMarkToMarket(booking);
+                    Program program = new(args[0], args[1]);
+                    program.ShowTrades();
+                    program.ShowPrices();
+                    program.ShowPositions();
+                    program.ShowMarkToMarket();
                 }
                 else
                 {
@@ -41,10 +52,8 @@
             }
         }
 
-        static void ShowTrades(Booking booking)
+        void ShowTrades()
         {
-            var terminal = new Terminal(true);
-
             terminal.Title("trades");
             terminal.NewLine();
 
@@ -60,10 +69,8 @@
             terminal.NewLine();
         }
 
-        static void ShowPrices(Booking booking)
+        void ShowPrices()
         {
-            var terminal = new Terminal(true);
-
             terminal.Title("market prices");
             terminal.NewLine();
 
@@ -80,10 +87,8 @@
             terminal.NewLine();
         }
 
-        static void ShowPositions(Booking booking)
+        void ShowPositions()
         {
-            var terminal = new Terminal(true);
-
             Dictionary<string, int> positions = booking.CalculatePositions();
 
             terminal.Title("positions");
@@ -105,10 +110,8 @@
             terminal.NewLine();
         }
 
-        static void ShowMarkToMarket(Booking booking)
+        void ShowMarkToMarket()
         {
-            var terminal = new Terminal(true);
-
             Dictionary<string, decimal> m2m = booking.CalculateMarkToMarket();
 
             terminal.Title("mark to market");
