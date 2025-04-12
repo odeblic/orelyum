@@ -30,7 +30,7 @@ dotnet build
 How to test and run:
 
 ```sh
-dotnet run list-of-trades.txt
+dotnet run samples/list-of-trades.txt
 ```
 
 ## Screenshot
