@@ -17,6 +17,15 @@ A list of trades previously booked is available.
 
 Calculate the position for each asset.
 
+Market prices are provided for the traded products.
+
+| symbol | price |
+| ------ | ----- |
+| ETF-99 | 13.15 |
+| STK-71 | 55.16 |
+
+Calculate the mark to market for each position.
+
 ## Usage
 
 How to clone and build:
@@ -31,13 +40,18 @@ How to test and run:
 
 ```sh
 dotnet run samples/list-of-trades.txt
+dotnet run samples/list-of-trades.txt samples/market-prices.txt
 ```
 
-## Screenshot
+## Screenshots
 
-Positions:
+Positions only:
 
-![Positions](images/screenshot.png)
+![Positions only](images/screenshot1.png)
+
+Positions and mark to market:
+
+![Positions and market to market](images/screenshot2.png)
 
 ## License
 

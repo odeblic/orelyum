@@ -4,13 +4,13 @@
     {
         string filePathTrades;
         string filePathPrices;
-
         var booking = new Booking();
 
         if (args.Length == 1)
         {
             filePathTrades = args[0];
             booking.LoadTrades(filePathTrades);
+
             ShowTrades(booking);
             ShowPositions(booking);
         }
@@ -20,6 +20,7 @@
             filePathPrices = args[1];
             booking.LoadTrades(filePathTrades);
             booking.LoadPrices(filePathPrices);
+
             ShowTrades(booking);
             ShowPrices(booking);
             ShowPositions(booking);
@@ -123,6 +124,7 @@
         Console.WriteLine("    This program loads a batch of booked trades and calculate the positions.");
         Console.WriteLine("");
         Console.WriteLine("Usage:");
-        Console.WriteLine("    $ orelyum [FILE]");
+        Console.WriteLine("    $ orelyum [TRADE_FILE]");
+        Console.WriteLine("    $ orelyum [TRADE_FILE] [PRICE_FILE]");
     }
 }
