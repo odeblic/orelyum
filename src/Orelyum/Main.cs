@@ -110,10 +110,10 @@
             foreach (var kvp in m2m)
             {
                 var symbol = kvp.Key;
-                var notional = kvp.Value;
+                var mark = kvp.Value;
 
                 terminal.Symbol(symbol);
-                terminal.Price(notional);
+                terminal.Price(mark);
                 terminal.NewLine();
             }
 
