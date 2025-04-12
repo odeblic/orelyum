@@ -5,13 +5,14 @@ public class Formatter(int width = 8, int precision = 2)
 
     public string Direction(Trade.Direction direction)
     {
-        
+        int width = this.width > 2 ? this.width : 2;
+
         switch (direction)
         {
             case Trade.Direction.BUY:
-                return "buy".PadRight(6);
+                return "buy".PadRight(width - 2);
             case Trade.Direction.SELL:
-                return "sell".PadRight(6);
+                return "sell".PadRight(width - 2);
             default:
                 throw new ArgumentException("Invalid trade direction");
         }
@@ -19,19 +20,17 @@ public class Formatter(int width = 8, int precision = 2)
 
     public string Symbol(string symbol)
     {
-        return symbol.PadRight(6);
+        int width = this.width > 2 ? this.width : 2;
+        return symbol.PadRight(width - 2);
     }
 
     public string Quantity(int quantity)
     {
         return quantity.ToString().PadLeft(width);
-        //return quantity.ToString($"D{width}");
     }
 
     public string Price(decimal price)
     {
         return price.ToString($"F{precision}").PadLeft(width);
-        //return $"{price:F{precision}}".PadLeft(width);
-        //return string.Format($"{{0,{width:F{precision}}}}", price);;
     }
 }
